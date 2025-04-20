@@ -40,16 +40,35 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
       aria-label={`Doctor card for ${doctor.name}`}
     >
       <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}>
-        <Avatar
-          src={doctor.photo}
-          alt={doctor.name}
+        <Box
           sx={{
             width: { xs: "100%", md: 160 },
-            height: 160,
+            height: { xs: 200, md: "auto" },
+            position: "relative",
+            overflow: "hidden",
             borderRadius: { xs: 0, md: "4px 0 0 4px" },
           }}
-          variant="square"
-        />
+        >
+          <Avatar
+            src={doctor.photo}
+            alt={doctor.name}
+            sx={{
+              width: "100%",
+              height: "100%",
+              borderRadius: "inherit",
+            }}
+            slotProps={{
+              img: {
+                style: {
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                },
+              },
+            }}
+            variant="square"
+          />
+        </Box>
         <CardContent sx={{ flex: "1 1 auto", p: 3 }}>
           <Box
             sx={{
