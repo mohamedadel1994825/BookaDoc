@@ -14,7 +14,6 @@ const fetchDoctors = async (
     specialty: string | null
 ): Promise<DoctorsResponse> => {
     // Add a small delay to simulate network request
-    await new Promise(resolve => setTimeout(resolve, 300));
 
     // Filter by specialty if provided
     const filteredDoctors = specialty
@@ -38,8 +37,9 @@ export function useDoctors(page: number, limit: number, specialty: string | null
     return useQuery<DoctorsResponse, Error>({
         queryKey: ['doctors', page, limit, specialty],
         queryFn: () => fetchDoctors(page, limit, specialty),
-        // Keep previous data while fetching new data
-        keepPreviousData: true,
+        // These settings help ensure loading states appear appropriately
+        staleTime: 0, // Data is immediately stale and will refetch
+        gcTime: 0, // Don't keep the data in cache (React Query v4+ uses gcTime instead of cacheTime)
         // Don't refetch on window focus
         refetchOnWindowFocus: false,
     });
