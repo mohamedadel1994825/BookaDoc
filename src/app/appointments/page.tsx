@@ -2,7 +2,9 @@
 
 import AppointmentsList from "@/components/doctors/AppointmentsList";
 import { RootState } from "@/store";
-import { Box, Container, Paper, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -27,6 +29,18 @@ export default function AppointmentsPage() {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
+      <Box sx={{ mb: 2 }}>
+        <Button
+          component={Link}
+          href="/"
+          startIcon={<ArrowBackIcon />}
+          variant="outlined"
+          sx={{ mb: 2 }}
+        >
+          Back to Home
+        </Button>
+      </Box>
+      
       <Paper sx={{ p: 4 }}>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom>
@@ -61,6 +75,15 @@ export default function AppointmentsPage() {
             <Typography variant="body2" color="text.secondary" paragraph>
               Book an appointment with one of our doctors to get started.
             </Typography>
+            <Button
+              component={Link}
+              href="/"
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2 }}
+            >
+              Browse Doctors
+            </Button>
           </Box>
         )}
       </Paper>
