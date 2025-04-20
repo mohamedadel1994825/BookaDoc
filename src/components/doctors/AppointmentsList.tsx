@@ -3,8 +3,8 @@
 import { Appointment } from "@/helpers/mockData";
 import { RootState } from "@/store";
 import { removeAppointment } from "@/store/slices/appointmentsSlice";
-import EventBusyIcon from "@mui/icons-material/EventBusy";
 import {
+  Avatar,
   Box,
   Button,
   Card,
@@ -13,6 +13,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function AppointmentsList() {
@@ -29,10 +30,22 @@ export default function AppointmentsList() {
     return (
       <Card>
         <CardContent sx={{ py: 5, textAlign: "center" }}>
-          <EventBusyIcon
-            color="action"
-            sx={{ fontSize: 48, mb: 2, opacity: 0.6 }}
-          />
+          <Box
+            sx={{
+              position: "relative",
+              width: 100,
+              height: 100,
+              mx: "auto",
+              mb: 2,
+            }}
+          >
+            <Image
+              src="https://img.freepik.com/free-photo/doctor-with-stethoscope-hands-hospital-background_1423-1.jpg"
+              alt="Doctor with stethoscope"
+              fill
+              style={{ borderRadius: "50%", objectFit: "cover" }}
+            />
+          </Box>
           <Typography variant="h6" gutterBottom color="text.secondary">
             No appointments booked yet
           </Typography>
@@ -58,8 +71,22 @@ export default function AppointmentsList() {
           aria-label={`Appointment with ${appointment.doctorName}`}
         >
           <CardContent>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={12} sm={1}>
+                <Avatar
+                  sx={{
+                    width: 50,
+                    height: 50,
+                    border: "2px solid",
+                    borderColor: "primary.light",
+                  }}
+                  alt={appointment.doctorName}
+                  src={`https://randomuser.me/api/portraits/men/${
+                    parseInt(appointment.doctorId) % 50
+                  }.jpg?v=2&s=200`}
+                />
+              </Grid>
+              <Grid item xs={12} sm={5}>
                 <Typography variant="h6" gutterBottom>
                   {appointment.doctorName}
                 </Typography>
