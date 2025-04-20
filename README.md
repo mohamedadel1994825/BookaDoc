@@ -28,7 +28,7 @@ cd invitro-capital-doctors
 2. Install dependencies:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 3. Run the development server:
