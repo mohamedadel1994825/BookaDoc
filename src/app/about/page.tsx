@@ -56,7 +56,7 @@ export default function AboutPage() {
             <Grid item xs={12} md={6}>
               <Box
                 component="img"
-                src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2360&q=80"
+                src="https://images.unsplash.com/photo-1612349316228-5942a9b489c2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzIyfHxtYWxlJTIwZG9jdG9yJTIwZ3JvdXAlMjB3aXRoJTIwYmFsdG98ZW58MHx8MHx8fDA%3D"
                 alt="Medical professionals"
                 sx={{
                   width: "100%",
