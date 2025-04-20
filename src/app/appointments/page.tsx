@@ -40,7 +40,7 @@ export default function AppointmentsPage() {
           Back to Home
         </Button>
       </Box>
-      
+
       <Paper sx={{ p: 4 }}>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom>
@@ -53,39 +53,9 @@ export default function AppointmentsPage() {
           </Typography>
         </Box>
 
-        <AppointmentsList />
+        <AppointmentsList onSwitchToFindDoctors={() => router.push("/")} />
 
-        {appointments.length === 0 && (
-          <Box sx={{ mt: 4, textAlign: "center" }}>
-            <Box
-              component="img"
-              src="/calendar-empty.svg"
-              alt="Empty appointments"
-              sx={{
-                width: "100%",
-                maxWidth: 200,
-                height: "auto",
-                opacity: 0.6,
-                mb: 2,
-              }}
-            />
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              No appointments scheduled
-            </Typography>
-            <Typography variant="body2" color="text.secondary" paragraph>
-              Book an appointment with one of our doctors to get started.
-            </Typography>
-            <Button
-              component={Link}
-              href="/"
-              variant="contained"
-              color="primary"
-              sx={{ mt: 2 }}
-            >
-              Browse Doctors
-            </Button>
-          </Box>
-        )}
+     
       </Paper>
     </Container>
   );

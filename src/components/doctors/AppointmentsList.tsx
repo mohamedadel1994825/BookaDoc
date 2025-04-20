@@ -13,10 +13,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function AppointmentsList() {
+interface AppointmentsListProps {
+  onSwitchToFindDoctors?: () => void;
+}
+
+export default function AppointmentsList({
+  onSwitchToFindDoctors,
+}: AppointmentsListProps) {
   const dispatch = useDispatch();
   const appointments = useSelector(
     (state: RootState) => state.appointments.appointments
@@ -39,11 +44,16 @@ export default function AppointmentsList() {
               mb: 2,
             }}
           >
-            <Image
+            <Box
+              component="img"
               src="https://plus.unsplash.com/premium_photo-1661740544720-179bf4643323?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA1fHxtYWxlJTIwZG9jdG9yfGVufDB8fDB8fHww"
               alt="Doctor with stethoscope"
-              fill
-              style={{ borderRadius: "50%", objectFit: "cover" }}
+              sx={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
             />
           </Box>
           <Typography variant="h6" gutterBottom color="text.secondary">
@@ -52,6 +62,14 @@ export default function AppointmentsList() {
           <Typography variant="body2" color="text.secondary">
             Your scheduled appointments will appear here.
           </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ mt: 3 }}
+            onClick={onSwitchToFindDoctors}
+          >
+            Find Doctors
+          </Button>
         </CardContent>
       </Card>
     );

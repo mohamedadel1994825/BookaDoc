@@ -221,7 +221,7 @@ export default function HomePage() {
           <Typography variant="h5" component="h2" gutterBottom>
             Your Appointments
           </Typography>
-          <AppointmentsList />
+          <AppointmentsList onSwitchToFindDoctors={() => setTabValue(0)} />
         </TabPanel>
       </Paper>
     </Container>
