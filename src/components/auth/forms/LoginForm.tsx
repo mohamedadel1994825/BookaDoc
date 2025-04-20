@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
@@ -151,6 +151,8 @@ export default function LoginForm() {
   };
 
   return (
+    <Suspense fallback={<CircularProgress />}>
+
     <Box
       component="form"
       onSubmit={handleSubmit(onSubmit)}
@@ -229,6 +231,7 @@ export default function LoginForm() {
       <Button variant="text" fullWidth onClick={() => router.push("/register")}>
         Don&apos;t have an account? Register
       </Button>
-    </Box>
+      </Box>
+      </Suspense>
   );
 }
