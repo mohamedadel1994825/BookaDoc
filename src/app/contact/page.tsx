@@ -1,5 +1,6 @@
 "use client";
 
+import { ContactFormData, contactSchema } from "@/schemas/contactSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -19,34 +20,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-
-// Form validation schema
-const schema = yup
-  .object({
-    name: yup.string().required("Name is required"),
-    email: yup
-      .string()
-      .email("Enter a valid email")
-      .required("Email is required"),
-    phone: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Please enter a valid 10-digit phone number"),
-    subject: yup.string().required("Subject is required"),
-    message: yup
-      .string()
-      .required("Message is required")
-      .min(10, "Message must be at least 10 characters"),
-  })
-  .required();
-
-type FormData = {
-  name: string;
-  email: string;
-  phone?: string;
-  subject: string;
-  message: string;
-};
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,11 +31,11 @@ export default function ContactPage() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>({
-    resolver: yupResolver(schema),
+  } = useForm<ContactFormData>({
+    resolver: yupResolver(contactSchema),
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: ContactFormData) => {
     setIsSubmitting(true);
     setError(null);
 

@@ -110,13 +110,30 @@ export default function BookingModal({ doctor, onClose }: BookingModalProps) {
       </DialogTitle>
 
       <DialogContent>
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="h6">
-            {doctor.name} - {doctor.specialty}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {doctor.location}
-          </Typography>
+        <Box sx={{ mb: 3, display: "flex", alignItems: "center" }}>
+          <Box
+            component="img"
+            src={doctor.photo}
+            alt={doctor.name}
+            sx={{
+              width: 60,
+              height: 60,
+              borderRadius: "50%",
+              objectFit: "cover",
+              mr: 2,
+              border: "2px solid",
+              borderColor: "primary.light",
+              boxShadow: 1,
+            }}
+          />
+          <Box>
+            <Typography variant="h6">
+              {doctor.name} - {doctor.specialty}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {doctor.location}
+            </Typography>
+          </Box>
         </Box>
 
         <Typography variant="subtitle1" gutterBottom>

@@ -28,3 +28,6 @@ export const registerSchema = yup.object().shape({
     email: yup.string().email("Invalid email format").required("Email is required"),
     address: yup.string(),
 });
+
+export type LoginFormData = yup.InferType<typeof loginSchema>;
+export type RegisterFormData = yup.InferType<typeof registerSchema>;

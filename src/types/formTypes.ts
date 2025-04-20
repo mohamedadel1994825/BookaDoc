@@ -1,11 +1,2 @@
-
-export type RegisterFormData = {
-    firstName: string;
-    lastName?: string;
-    username: string;
-    password: string;
-    confirmPassword: string;
-    email: string;
-    address?: string;
-  };
-  
+// This file is kept for potential future form types
+// RegisterFormData is now defined in src/schemas/authSchemas.ts

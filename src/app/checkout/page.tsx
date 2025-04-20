@@ -29,6 +29,7 @@ export default function CheckoutPage() {
     null
   );
   const [doctorPrice, setDoctorPrice] = useState<number>(0);
+  const [doctorPhoto, setDoctorPhoto] = useState<string>("");
   const router = useRouter();
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
@@ -58,6 +59,7 @@ export default function CheckoutPage() {
         const doctor = doctors.find((doc) => doc.id === doctorId);
         if (doctor) {
           setDoctorPrice(doctor.price);
+          setDoctorPhoto(doctor.photo);
         }
       } else {
         // Missing required params, redirect back
@@ -132,12 +134,34 @@ export default function CheckoutPage() {
               Appointment Details
             </Typography>
             <Box sx={{ my: 3 }}>
-              <Typography variant="body1" gutterBottom>
-                <strong>Doctor:</strong> {appointmentData.doctorName}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                <strong>Specialty:</strong> {appointmentData.doctorSpecialty}
-              </Typography>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+                <Box
+                  component="img"
+                  src={
+                    doctorPhoto ||
+                    "https://images.unsplash.com/photo-1615177393114-bd2917a4f74a?q=80&w=300&auto=format&fit=crop"
+                  }
+                  alt={appointmentData.doctorName}
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    mr: 2,
+                    border: "2px solid",
+                    borderColor: "primary.light",
+                    boxShadow: 1,
+                  }}
+                />
+                <Box>
+                  <Typography variant="h6" fontWeight="bold">
+                    {appointmentData.doctorName}
+                  </Typography>
+                  <Typography variant="body1" color="primary.main">
+                    {appointmentData.doctorSpecialty}
+                  </Typography>
+                </Box>
+              </Box>
               <Typography variant="body1" gutterBottom>
                 <strong>Date & Time:</strong> {appointmentData.dateTime}
               </Typography>
@@ -167,6 +191,7 @@ export default function CheckoutPage() {
               specialty: appointmentData.doctorSpecialty,
               dateTime: appointmentData.dateTime,
               price: doctorPrice, // Use the doctor's specific price
+              doctorPhoto: doctorPhoto, // Add the doctor's photo
             }}
             onSuccess={handlePaymentSuccess}
           />

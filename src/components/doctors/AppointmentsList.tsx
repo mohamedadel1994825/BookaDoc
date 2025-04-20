@@ -40,7 +40,7 @@ export default function AppointmentsList() {
             }}
           >
             <Image
-              src="https://img.freepik.com/free-photo/doctor-with-stethoscope-hands-hospital-background_1423-1.jpg"
+              src="https://plus.unsplash.com/premium_photo-1661740544720-179bf4643323?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA1fHxtYWxlJTIwZG9jdG9yfGVufDB8fDB8fHww"
               alt="Doctor with stethoscope"
               fill
               style={{ borderRadius: "50%", objectFit: "cover" }}

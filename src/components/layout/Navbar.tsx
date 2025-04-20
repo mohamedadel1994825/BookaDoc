@@ -31,7 +31,7 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -43,6 +43,7 @@ const navItems = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -50,6 +51,9 @@ export default function Navbar() {
   const { user, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
   );
+
+  // Check if user information is available
+  const hasUser = isAuthenticated && user;
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -73,6 +77,24 @@ export default function Navbar() {
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
+
+  // Load user data from localStorage if possible
+  useEffect(() => {
+    // If authenticated but no user data, try to reload from localStorage
+    if (isAuthenticated && !user) {
+      const savedUser = localStorage.getItem("user");
+      if (savedUser) {
+        try {
+          // If we can get user data from localStorage, we could
+          // dispatch loginSuccess here, but that might cause a loop
+          // Instead, we'll just force a refresh of the page
+          window.location.reload();
+        } catch (e) {
+          console.error("Error loading user data:", e);
+        }
+      }
+    }
+  }, [isAuthenticated, user]);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -228,7 +250,7 @@ export default function Navbar() {
 
           {/* User menu (desktop) */}
           <Box sx={{ flexGrow: 0 }}>
-            {isAuthenticated ? (
+            {hasUser ? (
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -254,7 +276,11 @@ export default function Navbar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <MenuItem component={Link} href="/appointments">
+                  <MenuItem
+                    component={Link}
+                    href="/appointments"
+                    onClick={handleCloseUserMenu}
+                  >
                     <ListItemIcon>
                       <CalendarMonthIcon fontSize="small" />
                     </ListItemIcon>
@@ -274,7 +300,12 @@ export default function Navbar() {
                 href="/login"
                 startIcon={<LoginIcon />}
                 variant="outlined"
-                sx={{ my: 1, mx: 1.5 }}
+                sx={{
+                  ...(pathname === "/login" && {
+                    borderColor: "primary.main",
+                    color: "primary.main",
+                  }),
+                }}
               >
                 Login
               </Button>
@@ -293,7 +324,10 @@ export default function Navbar() {
         }}
         sx={{
           display: { xs: "block", sm: "none" },
-          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 280 },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: 240,
+          },
         }}
       >
         {drawer}

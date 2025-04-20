@@ -1,7 +1,7 @@
 "use client";
 
-import { loginSchema } from "@/schemas/authSchemas";
-import { login } from "@/store/slices/authSlice";
+import { LoginFormData, loginSchema } from "@/schemas/authSchemas";
+import { loginRequest, loginSuccess } from "@/store/slices/authSlice";
 import { setUserId } from "@/store/slices/cartSlice";
 import { User } from "@/types/user";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,11 +22,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
-type FormData = {
-  email: string;
-  password: string;
-};
-
 export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -45,7 +40,7 @@ export default function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema),
   });
 
@@ -74,18 +69,25 @@ export default function LoginForm() {
     }
   }, [searchParams]);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     setError("");
+
+    // Dispatch loginRequest to set loading state
+    dispatch(loginRequest());
 
     try {
       const existingUsers = localStorage.getItem("registered_users");
       const users: User[] = existingUsers ? JSON.parse(existingUsers) : [];
-      const email = data.email.trim().toLowerCase();
+
+      // Normalize email for case-insensitive comparison
+      const normalizedEmail = data.email.trim().toLowerCase();
       const password = data.password.trim();
 
+      // Find user with case-insensitive email comparison
       const user = users.find(
-        (u) => u.email === email && u.password === password
+        (u) =>
+          u.email.toLowerCase() === normalizedEmail && u.password === password
       );
 
       if (user) {
@@ -93,17 +95,27 @@ export default function LoginForm() {
         document.cookie = "auth=true; path=/; max-age=86400"; // 24 hours
         localStorage.setItem("currentUser", JSON.stringify(user));
 
-        // Dispatch login action
-        dispatch(login(user));
+        // Store full user data but map it to the format expected by the auth slice
+        const authUser = {
+          id: user.userId,
+          name: user.firstName + (user.lastName ? ` ${user.lastName}` : ""),
+          email: user.email,
+        };
+
+        // Dispatch login success
+        dispatch(loginSuccess(authUser));
         dispatch(setUserId(user.username));
 
+        // Keep loading state active during the redirect
         // Use window.location for a hard redirect instead of router.push
         const redirectTo = pendingCartItem
           ? `/product/${pendingCartItem.id}`
           : searchParams.get("from") || "/";
 
         window.location.href = redirectTo;
+        // Note: we don't set isLoading to false here because we're redirecting
       } else {
+        // Only set loading to false on error/failure
         setError("Invalid email or password");
         setIsLoading(false);
       }

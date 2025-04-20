@@ -7,19 +7,24 @@ export const contactSchema = yup.object().shape({
     .required("Name is required")
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be less than 50 characters"),
-  
+
   email: yup
     .string()
     .email("Please enter a valid email address")
     .required("Email is required")
     .max(100, "Email must be less than 100 characters"),
-  
+
+  phone: yup
+    .string()
+    .matches(/^[0-9]{10}$/, "Please enter a valid 10-digit phone number")
+    .optional(),
+
   subject: yup
     .string()
     .required("Subject is required")
     .min(5, "Subject must be at least 5 characters")
     .max(100, "Subject must be less than 100 characters"),
-  
+
   message: yup
     .string()
     .required("Message is required")

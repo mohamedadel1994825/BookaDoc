@@ -54,6 +54,7 @@ interface PaymentFormProps {
     specialty: string;
     dateTime: string;
     price: number;
+    doctorPhoto?: string; // Optional doctor photo URL
   };
   onSuccess: () => void;
 }
@@ -92,6 +93,10 @@ export default function PaymentForm({
     }, 2000);
   };
 
+  // Fallback image if no doctor photo is provided
+  const defaultDoctorImage =
+    "https://images.unsplash.com/photo-1615177393114-bd2917a4f74a?q=80&w=300&auto=format&fit=crop";
+
   return (
     <Box>
       <Typography variant="h5" component="h2" gutterBottom>
@@ -108,13 +113,32 @@ export default function PaymentForm({
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={8}>
-                <Typography variant="body1" gutterBottom>
-                  <strong>Doctor:</strong> {appointmentDetails.doctorName}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  <strong>Specialty:</strong> {appointmentDetails.specialty}
-                </Typography>
-                <Typography variant="body1">
+                <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                  <Box
+                    component="img"
+                    src={appointmentDetails.doctorPhoto || defaultDoctorImage}
+                    alt={appointmentDetails.doctorName}
+                    sx={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      mr: 2,
+                      border: "2px solid",
+                      borderColor: "primary.light",
+                      boxShadow: 1,
+                    }}
+                  />
+                  <Box>
+                    <Typography variant="body1" fontWeight="bold">
+                      {appointmentDetails.doctorName}
+                    </Typography>
+                    <Typography variant="body2" color="primary">
+                      {appointmentDetails.specialty}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Typography variant="body1" sx={{ mt: 2 }}>
                   <strong>Date & Time:</strong> {appointmentDetails.dateTime}
                 </Typography>
               </Grid>
