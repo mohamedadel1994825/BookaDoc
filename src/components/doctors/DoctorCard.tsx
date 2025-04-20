@@ -62,9 +62,9 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
             bgcolor: "background.default",
             overflow: "hidden",
             // Different border radius based on layout
-            borderRadius: { 
-              xs: "4px 4px 0 0", 
-              sm: "4px 0 0 4px" 
+            borderRadius: {
+              xs: "4px 4px 0 0",
+              sm: "4px 0 0 4px",
             },
             // This ensures the container maintains aspect ratio on larger screens
             "&::before": {
@@ -194,7 +194,8 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                   } more`}
                   size="small"
                   variant="outlined"
-                  sx={{ borderRadius: 1 }}
+                  sx={{ borderRadius: 1, cursor: "pointer" }}
+                  onClick={openModal}
                 />
               )}
             </Stack>
