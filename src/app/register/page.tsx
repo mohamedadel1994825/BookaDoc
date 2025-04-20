@@ -234,7 +234,7 @@ export default function RegisterPage() {
           >
             {loading ? <CircularProgress size={24} /> : "Sign Up"}
           </Button>
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="center">
             <Grid item>
               <Link href="/login" style={{ textDecoration: "none" }}>
                 <Typography variant="body2" color="primary">
