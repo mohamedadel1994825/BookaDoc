@@ -6,6 +6,7 @@ export interface Doctor {
     availability: string[];
     location: string;
     rating: number;
+    price: number;
 }
 
 export interface Appointment {
@@ -37,6 +38,7 @@ export const doctors: Doctor[] = [
         availability: ['Monday 9:00 AM', 'Monday 11:00 AM', 'Wednesday 2:00 PM', 'Friday 10:00 AM'],
         location: 'Medical Center, Building A, Room 302',
         rating: 4.8,
+        price: 175.0,
     },
     {
         id: '2',
@@ -46,6 +48,7 @@ export const doctors: Doctor[] = [
         availability: ['Tuesday 10:00 AM', 'Thursday 1:00 PM', 'Thursday 3:00 PM', 'Friday 9:00 AM'],
         location: 'Dermatology Clinic, Suite 205',
         rating: 4.6,
+        price: 150.0,
     },
     {
         id: '3',
@@ -55,6 +58,7 @@ export const doctors: Doctor[] = [
         availability: ['Monday 2:00 PM', 'Tuesday 11:00 AM', 'Wednesday 9:00 AM', 'Thursday 10:00 AM'],
         location: 'Medical Plaza, Floor 3, Room 312',
         rating: 4.9,
+        price: 165.0,
     },
     {
         id: '4',
@@ -64,6 +68,7 @@ export const doctors: Doctor[] = [
         availability: ['Monday 10:00 AM', 'Wednesday 1:00 PM', 'Thursday 11:00 AM', 'Friday 2:00 PM'],
         location: 'Neuroscience Center, Wing B, Room 415',
         rating: 4.7,
+        price: 185.0,
     },
     {
         id: '5',
@@ -73,6 +78,7 @@ export const doctors: Doctor[] = [
         availability: ['Tuesday 9:00 AM', 'Tuesday 1:00 PM', 'Thursday 9:00 AM', 'Friday 11:00 AM'],
         location: `Children's Health Center, Room 112`,
         rating: 4.9,
+        price: 140.0,
     },
     {
         id: '6',
@@ -82,6 +88,7 @@ export const doctors: Doctor[] = [
         availability: ['Monday 1:00 PM', 'Wednesday 10:00 AM', 'Wednesday 3:00 PM', 'Friday 1:00 PM'],
         location: 'Mental Health Clinic, Suite 305',
         rating: 4.5,
+        price: 200.0,
     },
     {
         id: '7',
@@ -91,6 +98,7 @@ export const doctors: Doctor[] = [
         availability: ['Tuesday 2:00 PM', 'Wednesday 11:00 AM', 'Thursday 2:00 PM', 'Friday 9:00 AM'],
         location: 'Orthopedic Specialists, Floor 2, Room 210',
         rating: 4.6,
+        price: 160.0,
     },
     {
         id: '8',
@@ -100,5 +108,6 @@ export const doctors: Doctor[] = [
         availability: ['Monday 3:00 PM', 'Tuesday 9:00 AM', 'Thursday 1:00 PM', 'Friday 3:00 PM'],
         location: 'Cancer Treatment Center, Suite 405',
         rating: 4.8,
+        price: 190.0,
     },
 ]; 

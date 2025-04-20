@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 // Step components
 import PaymentForm from "@/components/checkout/PaymentForm";
-import { Appointment } from "@/helpers/mockData";
+import { Appointment, doctors } from "@/helpers/mockData";
 import { addAppointment } from "@/store/slices/appointmentsSlice";
 
 const steps = ["Appointment Details", "Payment", "Confirmation"];
@@ -28,6 +28,7 @@ export default function CheckoutPage() {
   const [appointmentData, setAppointmentData] = useState<Appointment | null>(
     null
   );
+  const [doctorPrice, setDoctorPrice] = useState<number>(0);
   const router = useRouter();
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
@@ -43,6 +44,7 @@ export default function CheckoutPage() {
       const location = searchParams.get("location");
 
       if (doctorId && doctorName && doctorSpecialty && dateTime && location) {
+        // Create appointment data
         setAppointmentData({
           id: Math.random().toString(36).substring(2, 11),
           doctorId,
@@ -51,6 +53,12 @@ export default function CheckoutPage() {
           dateTime,
           location,
         });
+
+        // Find the doctor's price from the doctors array
+        const doctor = doctors.find((doc) => doc.id === doctorId);
+        if (doctor) {
+          setDoctorPrice(doctor.price);
+        }
       } else {
         // Missing required params, redirect back
         router.push("/");
@@ -136,6 +144,9 @@ export default function CheckoutPage() {
               <Typography variant="body1" gutterBottom>
                 <strong>Location:</strong> {appointmentData.location}
               </Typography>
+              <Typography variant="body1" color="primary.main" gutterBottom>
+                <strong>Consultation Fee:</strong> ${doctorPrice.toFixed(2)}
+              </Typography>
             </Box>
             <Box sx={{ mt: 4, textAlign: "right" }}>
               <Button
@@ -155,7 +166,7 @@ export default function CheckoutPage() {
               doctorName: appointmentData.doctorName,
               specialty: appointmentData.doctorSpecialty,
               dateTime: appointmentData.dateTime,
-              price: 125.0, // Fixed price for demo
+              price: doctorPrice, // Use the doctor's specific price
             }}
             onSuccess={handlePaymentSuccess}
           />

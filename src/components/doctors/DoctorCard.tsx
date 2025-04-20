@@ -66,8 +66,15 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
               <Typography variant="subtitle1" color="primary" gutterBottom>
                 {doctor.specialty}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" gutterBottom>
                 {doctor.location}
+              </Typography>
+              <Typography
+                variant="subtitle2"
+                color="primary.dark"
+                sx={{ fontWeight: "bold", mt: 1 }}
+              >
+                Consultation Fee: ${doctor.price.toFixed(2)}
               </Typography>
             </Box>
             <Box
@@ -89,19 +96,23 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
             </Box>
           </Box>
 
-          <Box sx={{ mt: 2 }}>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
-              Availability:
-            </Typography>
-            <Stack direction="row" spacing={1} flexWrap="wrap">
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                flexWrap: "wrap",
+                gap: 1,
+                display: { xs: "none", sm: "flex" },
+              }}
+            >
               {doctor.availability.slice(0, 3).map((slot, index) => (
                 <Chip
                   key={index}
                   label={slot}
                   size="small"
                   variant="outlined"
-                  color="primary"
-                  sx={{ mb: 1 }}
+                  sx={{ borderRadius: 1 }}
                 />
               ))}
               {doctor.availability.length > 3 && (
@@ -109,21 +120,18 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                   label={`+${doctor.availability.length - 3} more`}
                   size="small"
                   variant="outlined"
-                  sx={{ mb: 1 }}
+                  sx={{ borderRadius: 1 }}
                 />
               )}
             </Stack>
-          </Box>
-
-          <Box sx={{ mt: 2 }}>
             <Button
               variant="contained"
               color="primary"
               onClick={openModal}
+              sx={{ minWidth: "120px" }}
               aria-label={`Book appointment with ${doctor.name}`}
-              sx={{ width: { xs: "100%", md: "auto" } }}
             >
-              Book Appointment
+              Book Now
             </Button>
           </Box>
         </CardContent>
