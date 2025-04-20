@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 interface BookingModalProps {
@@ -28,14 +28,6 @@ export default function BookingModal({ doctor, onClose }: BookingModalProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
-
-  useEffect(() => {
-    // Prevent scrolling on the body when modal is open
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
 
   const handleSelectSlot = (slot: string) => {
     setSelectedSlot(slot);
@@ -57,16 +49,20 @@ export default function BookingModal({ doctor, onClose }: BookingModalProps) {
         )}`
       )}`;
 
+      // Use shorter delay to prevent UI issues
       setTimeout(() => {
         setIsProcessing(false);
+        onClose(); // Close modal first to prevent UI issues
         router.push(redirectUrl);
-      }, 1000);
+      }, 500);
       return;
     }
 
     // If authenticated, proceed to checkout
+    // Use shorter delay to prevent UI issues
     setTimeout(() => {
       setIsProcessing(false);
+      onClose(); // Close modal first to prevent UI issues
       router.push(
         `/checkout?doctorId=${doctor.id}&doctorName=${doctor.name}&specialty=${
           doctor.specialty
@@ -74,16 +70,40 @@ export default function BookingModal({ doctor, onClose }: BookingModalProps) {
           doctor.location
         )}`
       );
-    }, 1000);
+    }, 500);
+  };
+
+  // Create a stable handler for closing
+  const handleClose = () => {
+    if (!isProcessing) {
+      onClose();
+    }
   };
 
   return (
     <Dialog
       open={true}
-      onClose={isProcessing ? undefined : onClose}
+      onClose={handleClose}
       maxWidth="sm"
       fullWidth
       aria-labelledby="booking-modal-title"
+      // Fix scrolling but maintain stability
+      keepMounted
+      sx={{
+        "& .MuiBackdrop-root": {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        },
+        "& .MuiDialog-paper": {
+          margin: { xs: "16px", sm: "32px" },
+          width: "calc(100% - 32px)",
+          maxHeight: "calc(100% - 32px)",
+        },
+      }}
+      slotProps={{
+        backdrop: {
+          onClick: handleClose,
+        },
+      }}
     >
       <DialogTitle id="booking-modal-title" sx={{ pb: 1 }}>
         Book Appointment
@@ -124,7 +144,7 @@ export default function BookingModal({ doctor, onClose }: BookingModalProps) {
       </DialogContent>
 
       <DialogActions sx={{ px: 3, pb: 3 }}>
-        <Button onClick={onClose} color="inherit" disabled={isProcessing}>
+        <Button onClick={handleClose} color="inherit" disabled={isProcessing}>
           Cancel
         </Button>
         <Button
