@@ -23,8 +23,8 @@ interface DoctorCardProps {
 export default function DoctorCard({ doctor }: DoctorCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -41,30 +41,37 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
         transition: "transform 0.2s",
         "&:hover": { transform: "scale(1.01)" },
         boxShadow: 2,
-        "&:hover": {
-          boxShadow: 4,
-          transform: "scale(1.01)"
-        },
+        overflow: "hidden", // Ensures no content breaks outside the card
       }}
       aria-label={`Doctor card for ${doctor.name}`}
     >
-      <Box sx={{ 
-        display: "flex", 
-        flexDirection: { xs: "column", sm: "row" },
-        height: { xs: "auto", sm: "auto" }
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+        }}
+      >
+        {/* Completely redesigned image container for better responsiveness */}
         <Box
           sx={{
-            width: { xs: "100%", sm: 160 },
-            height: { xs: 200, sm: "100%" },
-            minHeight: { xs: 200, sm: 220 },
             position: "relative",
+            width: { xs: "100%", sm: "30%", md: "25%", lg: "20%" },
+            maxWidth: { sm: 200 },
+            minWidth: { sm: 150 },
+            height: { xs: 200, sm: "auto" },
+            bgcolor: "background.default",
             overflow: "hidden",
-            borderRadius: { xs: '4px 4px 0 0', sm: "4px 0 0 4px" },
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            bgcolor: "background.default", // Fallback background
+            // Different border radius based on layout
+            borderRadius: { 
+              xs: "4px 4px 0 0", 
+              sm: "4px 0 0 4px" 
+            },
+            // This ensures the container maintains aspect ratio on larger screens
+            "&::before": {
+              content: '""',
+              display: { xs: "none", sm: "block" },
+              paddingTop: "100%", // 1:1 Aspect ratio
+            },
           }}
         >
           <Box
@@ -72,24 +79,32 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
             src={doctor.photo}
             alt={doctor.name}
             sx={{
+              position: { xs: "relative", sm: "absolute" },
+              top: 0,
+              left: 0,
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              objectPosition: "center", // Ensures faces are always visible
+              objectPosition: "center top",
               transition: "transform 0.3s ease",
               "&:hover": {
                 transform: "scale(1.05)",
               },
             }}
+            loading="lazy"
           />
         </Box>
-        <CardContent sx={{ 
-          flex: "1 1 auto", 
-          p: { xs: 2, sm: 3 },
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}>
+
+        <CardContent
+          sx={{
+            flex: "1 1 auto",
+            p: { xs: 2, sm: 3 },
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            width: { xs: "100%", sm: "70%", md: "75%", lg: "80%" },
+          }}
+        >
           <Box>
             <Box
               sx={{
@@ -101,7 +116,11 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
               }}
             >
               <Box>
-                <Typography variant={isMobile ? "h6" : "h5"} component="h2" gutterBottom>
+                <Typography
+                  variant={isMobile ? "h6" : "h5"}
+                  component="h2"
+                  gutterBottom
+                >
                   {doctor.name}
                 </Typography>
                 <Typography variant="subtitle1" color="primary" gutterBottom>
@@ -138,14 +157,16 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
             </Box>
           </Box>
 
-          <Box sx={{ 
-            display: "flex", 
-            flexDirection: { xs: "column", sm: "row" },
-            justifyContent: "space-between",
-            alignItems: { xs: "stretch", sm: "center" },
-            gap: { xs: 2, sm: 1 },
-            mt: { xs: 2, sm: 0 }
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              justifyContent: "space-between",
+              alignItems: { xs: "stretch", sm: "center" },
+              gap: { xs: 2, sm: 1 },
+              mt: { xs: 2, sm: 0 },
+            }}
+          >
             <Stack
               direction="row"
               spacing={1}
@@ -155,18 +176,22 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                 display: { xs: "flex", sm: "flex" },
               }}
             >
-              {doctor.availability.slice(0, isTablet ? 2 : 3).map((slot, index) => (
-                <Chip
-                  key={index}
-                  label={slot}
-                  size="small"
-                  variant="outlined"
-                  sx={{ borderRadius: 1 }}
-                />
-              ))}
+              {doctor.availability
+                .slice(0, isTablet ? 2 : 3)
+                .map((slot, index) => (
+                  <Chip
+                    key={index}
+                    label={slot}
+                    size="small"
+                    variant="outlined"
+                    sx={{ borderRadius: 1 }}
+                  />
+                ))}
               {doctor.availability.length > (isTablet ? 2 : 3) && (
                 <Chip
-                  label={`+${doctor.availability.length - (isTablet ? 2 : 3)} more`}
+                  label={`+${
+                    doctor.availability.length - (isTablet ? 2 : 3)
+                  } more`}
                   size="small"
                   variant="outlined"
                   sx={{ borderRadius: 1 }}
@@ -177,9 +202,9 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
               variant="contained"
               color="primary"
               onClick={openModal}
-              sx={{ 
+              sx={{
                 minWidth: "120px",
-                alignSelf: { xs: "stretch", sm: "flex-end" }
+                alignSelf: { xs: "stretch", sm: "flex-end" },
               }}
               aria-label={`Book appointment with ${doctor.name}`}
               fullWidth={isMobile}
