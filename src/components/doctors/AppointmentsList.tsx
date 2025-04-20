@@ -90,13 +90,15 @@ export default function AppointmentsList({
         >
           <CardContent>
             <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} sm={1}>
+              <Grid item xs={3} sm={1}>
                 <Avatar
                   sx={{
-                    width: 50,
-                    height: 50,
+                    width: { xs: 40, sm: 50 },
+                    height: { xs: 40, sm: 50 },
                     border: "2px solid",
                     borderColor: "primary.light",
+                    marginLeft: { xs: "auto", sm: 0 },
+                    marginRight: { xs: "auto", sm: 0 },
                   }}
                   alt={appointment.doctorName}
                   src={`https://randomuser.me/api/portraits/men/${
@@ -104,15 +106,35 @@ export default function AppointmentsList({
                   }.jpg?v=2&s=200`}
                 />
               </Grid>
-              <Grid item xs={12} sm={5}>
-                <Typography variant="h6" gutterBottom>
+              <Grid item xs={9} sm={5}>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  sx={{
+                    fontSize: { xs: "1rem", sm: "1.25rem" },
+                    marginBottom: { xs: 0.5, sm: 1 },
+                  }}
+                >
                   {appointment.doctorName}
                 </Typography>
-                <Typography variant="body1" color="primary" gutterBottom>
+                <Typography
+                  variant="body1"
+                  color="primary"
+                  gutterBottom
+                  sx={{ fontSize: { xs: "0.875rem", sm: "1rem" } }}
+                >
                   {appointment.doctorSpecialty}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={6} sx={{ textAlign: { sm: "right" } }}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                sx={{
+                  textAlign: { xs: "left", sm: "right" },
+                  mt: { xs: 1, sm: 0 },
+                }}
+              >
                 <Typography variant="body1" fontWeight="medium">
                   {appointment.dateTime}
                 </Typography>
