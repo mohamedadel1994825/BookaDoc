@@ -16,6 +16,7 @@ export interface Appointment {
     doctorName: string;
     doctorSpecialty: string;
     location: string;
+    doctorPhoto: string;
 }
 
 export const specialties = [

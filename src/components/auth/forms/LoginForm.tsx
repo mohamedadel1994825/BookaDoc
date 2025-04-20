@@ -1,7 +1,9 @@
 "use client";
 
 import { LoginFormData, loginSchema } from "@/schemas/authSchemas";
+import { loadUserAppointments } from "@/store/slices/appointmentsSlice";
 import { loginRequest, loginSuccess } from "@/store/slices/authSlice";
+import { StoredUser } from "@/types/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -43,6 +45,9 @@ export default function LoginForm() {
   });
 
   useEffect(() => {
+    // Clear any existing auth cookies on the login page load
+    document.cookie = "auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
     if (searchParams.get("registered") === "true") {
       setShowRegistrationSuccess(true);
     }
@@ -75,42 +80,64 @@ export default function LoginForm() {
     dispatch(loginRequest());
 
     try {
-      const existingUsers = localStorage.getItem("registered_users");
-      const users: User[] = existingUsers ? JSON.parse(existingUsers) : [];
+      // Check both possible storage keys
+      const existingUsers =
+        localStorage.getItem("registered_users") ||
+        localStorage.getItem("registeredUsers");
+
+      if (!existingUsers) {
+        setError("No registered users found. Please register first.");
+        setIsLoading(false);
+        return;
+      }
+
+      const users = JSON.parse(existingUsers) as StoredUser[];
 
       // Normalize email for case-insensitive comparison
       const normalizedEmail = data.email.trim().toLowerCase();
       const password = data.password.trim();
 
-      // Find user with case-insensitive email comparison
-      const user = users.find(
-        (u) =>
+      // Find user with case-insensitive email comparison and exact password match
+      const user = users.find((u: StoredUser) => {
+        if (!u.email || typeof u.email !== "string") return false;
+        return (
           u.email.toLowerCase() === normalizedEmail && u.password === password
-      );
+        );
+      });
 
       if (user) {
-        // Set auth cookie with a longer expiration time
-        document.cookie = "auth=true; path=/; max-age=86400"; // 24 hours
-        localStorage.setItem("currentUser", JSON.stringify(user));
-
-        // Store full user data but map it to the format expected by the auth slice
+        // Create proper auth user object with consistent ID
         const authUser = {
           id: user.userId,
-          name: user.firstName + (user.lastName ? ` ${user.lastName}` : ""),
+          name: `${user.firstName} ${user.lastName || ""}`.trim(),
           email: user.email,
         };
 
-        // Dispatch login success
+        // Set auth cookie with a longer expiration time
+        document.cookie = "auth=true; path=/; max-age=86400"; // 24 hours
+
+        // Save user with the EXACT SAME FORMAT to both storage locations to ensure consistent IDs
+        localStorage.setItem("user", JSON.stringify(authUser));
+        localStorage.setItem("currentUser", JSON.stringify(user));
+
+        // First trigger login success
         dispatch(loginSuccess(authUser));
 
-        // Keep loading state active during the redirect
-        // Use window.location for a hard redirect instead of router.push
-        const redirectTo = pendingCartItem
-          ? `/product/${pendingCartItem.id}`
-          : searchParams.get("from") || "/";
+        // Then load appointments with slight delay to ensure user ID is available
+        setTimeout(() => {
+          dispatch(loadUserAppointments());
+        }, 100);
 
-        window.location.href = redirectTo;
-        // Note: we don't set isLoading to false here because we're redirecting
+        // Get the redirect path from the URL or use default
+        const searchParams = new URLSearchParams(window.location.search);
+        const redirectTo =
+          searchParams.get("from") || searchParams.get("redirect") || "/";
+
+        // Keep loading state active during the redirect
+        // Use router for SPA navigation instead of window.location for better user experience
+        setTimeout(() => {
+          router.push(redirectTo);
+        }, 500);
       } else {
         // Only set loading to false on error/failure
         setError("Invalid email or password");

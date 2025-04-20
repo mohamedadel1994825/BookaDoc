@@ -54,8 +54,6 @@ export default function AppointmentsPage() {
         </Box>
 
         <AppointmentsList onSwitchToFindDoctors={() => router.push("/")} />
-
-     
       </Paper>
     </Container>
   );

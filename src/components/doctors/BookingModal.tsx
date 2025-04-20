@@ -46,7 +46,7 @@ export default function BookingModal({ doctor, onClose }: BookingModalProps) {
           doctor.specialty
         }&dateTime=${selectedSlot}&location=${encodeURIComponent(
           doctor.location
-        )}`
+        )}&doctorPhoto=${encodeURIComponent(doctor.photo)}`
       )}`;
 
       // Use shorter delay to prevent UI issues
@@ -68,7 +68,7 @@ export default function BookingModal({ doctor, onClose }: BookingModalProps) {
           doctor.specialty
         }&dateTime=${selectedSlot}&location=${encodeURIComponent(
           doctor.location
-        )}`
+        )}&doctorPhoto=${encodeURIComponent(doctor.photo)}`
       );
     }, 500);
   };

@@ -101,9 +101,7 @@ export default function AppointmentsList({
                     marginRight: { xs: "auto", sm: 0 },
                   }}
                   alt={appointment.doctorName}
-                  src={`https://randomuser.me/api/portraits/men/${
-                    parseInt(appointment.doctorId) % 50
-                  }.jpg?v=2&s=200`}
+                  src={appointment.doctorPhoto}
                 />
               </Grid>
               <Grid item xs={9} sm={5}>

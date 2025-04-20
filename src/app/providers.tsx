@@ -1,6 +1,7 @@
 "use client";
 
 import theme from "@/app/theme";
+import AuthInitializer from "@/components/auth/AuthInitializer";
 import { store } from "@/store";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
@@ -16,6 +17,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <ReduxProvider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <AuthInitializer />
           {children}
         </ThemeProvider>
       </ReduxProvider>

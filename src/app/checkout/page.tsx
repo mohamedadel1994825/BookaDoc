@@ -43,9 +43,10 @@ export default function CheckoutPage() {
       const doctorSpecialty = searchParams.get("specialty");
       const dateTime = searchParams.get("dateTime");
       const location = searchParams.get("location");
-
+      const doctorPhoto = searchParams.get("doctorPhoto");
       if (doctorId && doctorName && doctorSpecialty && dateTime && location) {
         // Create appointment data
+        console.log("doctorPhoto", doctorPhoto);
         setAppointmentData({
           id: Math.random().toString(36).substring(2, 11),
           doctorId,
@@ -53,6 +54,7 @@ export default function CheckoutPage() {
           doctorSpecialty,
           dateTime,
           location,
+          doctorPhoto: doctorPhoto || "",
         });
 
         // Find the doctor's price from the doctors array
@@ -60,6 +62,7 @@ export default function CheckoutPage() {
         if (doctor) {
           setDoctorPrice(doctor.price);
           setDoctorPhoto(doctor.photo);
+          console.log("doctorPhoto", doctorPhoto);
         }
       } else {
         // Missing required params, redirect back
