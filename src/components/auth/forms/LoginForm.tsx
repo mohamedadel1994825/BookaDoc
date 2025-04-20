@@ -2,8 +2,6 @@
 
 import { LoginFormData, loginSchema } from "@/schemas/authSchemas";
 import { loginRequest, loginSuccess } from "@/store/slices/authSlice";
-import { setUserId } from "@/store/slices/cartSlice";
-import { User } from "@/types/user";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -104,7 +102,6 @@ export default function LoginForm() {
 
         // Dispatch login success
         dispatch(loginSuccess(authUser));
-        dispatch(setUserId(user.username));
 
         // Keep loading state active during the redirect
         // Use window.location for a hard redirect instead of router.push

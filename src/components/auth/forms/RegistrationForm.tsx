@@ -1,8 +1,6 @@
 "use client";
 
 import { RegisterFormData, registerSchema } from "@/schemas/authSchemas";
-import { ToastState } from "@/types/cart";
-import { User } from "@/types/user";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -21,6 +19,22 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+
+// Define local interfaces for the component
+interface ToastState {
+  open: boolean;
+  message: string;
+  severity: "success" | "info" | "warning" | "error";
+}
+
+interface StoredUser {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  email: string;
+}
 
 export default function RegistrationForm() {
   const dispatch = useDispatch();
@@ -47,9 +61,9 @@ export default function RegistrationForm() {
     try {
       const existingUsers = localStorage.getItem("registered_users");
       if (existingUsers) {
-        const users: User[] = JSON.parse(existingUsers);
+        const users: StoredUser[] = JSON.parse(existingUsers);
         users.forEach((user) => {
-          if (user.email) {
+          if (user.email && typeof user.email === "string") {
             emails.push(user.email.trim().toLowerCase());
           }
         });
@@ -63,7 +77,7 @@ export default function RegistrationForm() {
       const currentUser = localStorage.getItem("currentUser");
       if (currentUser) {
         const user = JSON.parse(currentUser);
-        if (user.email) {
+        if (user.email && typeof user.email === "string") {
           emails.push(user.email.trim().toLowerCase());
         }
       }
@@ -76,7 +90,7 @@ export default function RegistrationForm() {
       const userInAuth = localStorage.getItem("user");
       if (userInAuth) {
         const user = JSON.parse(userInAuth);
-        if (user.email) {
+        if (user.email && typeof user.email === "string") {
           emails.push(user.email.trim().toLowerCase());
         }
       }
@@ -124,7 +138,7 @@ export default function RegistrationForm() {
 
       // Get registered users
       const existingUsersStr = localStorage.getItem("registered_users");
-      const existingUsers: User[] = existingUsersStr
+      const existingUsers: StoredUser[] = existingUsersStr
         ? JSON.parse(existingUsersStr)
         : [];
 
@@ -144,7 +158,9 @@ export default function RegistrationForm() {
       const normalizedUsername = formData.username.trim().toLowerCase();
       const usernameExists = existingUsers.some(
         (user) =>
-          user.username && user.username.toLowerCase() === normalizedUsername
+          user.username &&
+          typeof user.username === "string" &&
+          user.username.toLowerCase() === normalizedUsername
       );
 
       if (usernameExists) {
@@ -154,7 +170,7 @@ export default function RegistrationForm() {
       }
 
       // Create new user with normalized email
-      const newUser: User = {
+      const newUser: StoredUser = {
         userId: formData.username,
         firstName: formData.firstName,
         lastName: formData.lastName,

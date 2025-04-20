@@ -56,28 +56,46 @@ type FormData = {
   confirmPassword: string;
 };
 
-// Save registered user to localStorage
-const saveRegisteredUser = (userData: {
+// Define local user interface for registration
+interface RegisterUser {
   id: string;
   name: string;
   email: string;
   password: string;
-}) => {
+}
+
+// Save registered user to localStorage
+const saveRegisteredUser = (
+  userData: RegisterUser
+): { success: boolean; message?: string } => {
   if (typeof window !== "undefined") {
     try {
       // Get existing registered users or initialize empty array
       const existingUsers = localStorage.getItem("registeredUsers");
       const registeredUsers = existingUsers ? JSON.parse(existingUsers) : [];
 
+      // Check for existing email to prevent duplicates
+      const emailExists = registeredUsers.some(
+        (user: { email: string }) =>
+          user.email.toLowerCase() === userData.email.toLowerCase()
+      );
+
+      if (emailExists) {
+        return { success: false, message: "Email already exists" };
+      }
+
       // Add new user
       registeredUsers.push(userData);
 
       // Save back to localStorage
       localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+      return { success: true };
     } catch (e) {
       console.error("Error saving registered user to localStorage", e);
+      return { success: false, message: "Storage error" };
     }
   }
+  return { success: false, message: "Browser storage not available" };
 };
 
 export default function RegisterPage() {
@@ -110,31 +128,40 @@ export default function RegisterPage() {
   const onSubmit = (data: FormData) => {
     dispatch(registerRequest());
 
+    // Normalize email to prevent case-sensitivity issues
+    const normalizedEmail = data.email.trim().toLowerCase();
+
     // Simulate API call with delay
     setTimeout(() => {
-      // In a real app, this would be an API call to create a user
-      try {
-        // Create a new user
-        const newUser: User = {
-          id: Math.random().toString(36).substring(2, 11), // Generate random ID
-          name: data.name,
-          email: data.email,
-        };
+      // Create a new user with a more reliable ID
+      const timestamp = new Date().getTime();
+      const uniqueId = `user_${timestamp}_${Math.floor(Math.random() * 1000)}`;
 
-        // Save user to localStorage for login functionality
-        saveRegisteredUser({
-          id: newUser.id,
-          name: newUser.name,
-          email: newUser.email,
-          password: data.password,
-        });
+      const newUser: RegisterUser = {
+        id: uniqueId,
+        name: data.name,
+        email: normalizedEmail,
+        password: data.password,
+      };
 
-        dispatch(registerSuccess(newUser));
+      // Save user to localStorage for login functionality
+      const result = saveRegisteredUser(newUser);
+
+      if (result.success) {
+        dispatch(registerSuccess(newUser as User));
         // Initialize user-specific appointments (empty at registration)
         dispatch(loadUserAppointments());
         router.push("/");
-      } catch (error) {
-        dispatch(registerFailure("Registration failed. Please try again."));
+      } else {
+        if (result.message === "Email already exists") {
+          dispatch(
+            registerFailure(
+              "This email is already registered. Please use a different email or sign in."
+            )
+          );
+        } else {
+          dispatch(registerFailure("Registration failed. Please try again."));
+        }
       }
     }, 1000);
   };
