@@ -1,5 +1,7 @@
 # InVitro Capital Doctors
 
+👨‍⚕️ BookaDoc Demo:
+https://book-a-doc-sooty.vercel.app/
 A responsive and accessible doctor appointment booking UI module for healthcare platforms.
 
 ## Features
@@ -21,8 +23,8 @@ A responsive and accessible doctor appointment booking UI module for healthcare 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/invitro-capital-doctors.git
-cd invitro-capital-doctors
+git clone https://github.com/mohamedadel1994825/BookaDoc
+cd BookaDoc
 ```
 
 2. Install dependencies:
@@ -57,10 +59,16 @@ npm run dev
 
 ## Project Structure
 
-- `src/components/doctors/` - Doctor-related components
-- `src/helpers/mockData.ts` - Mock data for doctors and appointments
-- `src/store/` - Redux store configuration and slices
-- `src/app/` - Next.js app router pages
+src/
+├── app/ # Next.js app router pages
+├── components/ # Reusable components
+├── hooks/ # Custom hooks
+├── middleware/ # Custom middleware
+├── schemas/ # Schema validation with Yup
+├── store/ # Redux store configuration& slices
+├── styles/ # Global styles
+└── types/ # TypeScript type definitions
+├── utils/ # Formatting Data
 
 ## Known Limitations and Next Steps
 
