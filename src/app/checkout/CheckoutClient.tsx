@@ -105,13 +105,29 @@ export default function CheckoutClient() {
             {activeStep === 0 ? "Back to Doctors" : "Back"}
           </Button>
 
-          <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+          <Box
+            sx={{
+              overflowX: "auto",
+              width: "100%",
+              "&::-webkit-scrollbar": { display: "none" },
+              scrollbarWidth: "none",
+            }}
+          >
+            <Stepper
+              activeStep={activeStep}
+              sx={{
+                minWidth: "600px", // Ensures enough space to scroll
+                width: "max-content",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
         </Box>
 
         {activeStep === 0 && (

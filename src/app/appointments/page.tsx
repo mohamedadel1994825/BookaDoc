@@ -43,7 +43,12 @@ export default function AppointmentsPage() {
 
       <Paper sx={{ p: 4 }}>
         <Box sx={{ mb: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
+          <Typography
+            variant="h4"
+            component="h1"
+            gutterBottom
+            sx={{ fontSize: { xs: "1.25rem", sm: "2rem" } }}
+          >
             My Appointments
           </Typography>
           <Typography variant="body1" color="text.secondary">
