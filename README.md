@@ -2,6 +2,8 @@
 
 A responsive and accessible doctor appointment booking UI module for healthcare platforms.
 
+## 🔗 [Live Demo](https://book-a-doc-sooty.vercel.app/)
+
 ## ✨ Features
 
 - 🧑‍⚕️ **Doctor Directory**: Browse through a list of doctors with their specialty, availability, and location information.
@@ -12,8 +14,7 @@ A responsive and accessible doctor appointment booking UI module for healthcare 
 ## 🛠️ Tech Stack
 
 - ⚛️ **Framework**: Next.js with TypeScript
-- 🗄️ **State Management**: Redux Toolkit
-- 📊 **Http**: React-Query
+- 📊 **Http**: React Query
 - 🎨 **Styling**: Tailwind CSS
 - ♿ **Accessibility**: ARIA attributes and keyboard navigation
 
