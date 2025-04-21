@@ -51,7 +51,7 @@ export const doctors: Doctor[] = [
     },
     {
         id: '2',
-        name: 'Dr. Mohammad Al-Farsi',
+        name: 'Dr. Ahmed Ali',
         specialty: 'Dermatology',
         photo: 'https://plus.unsplash.com/premium_photo-1661688930817-025934217478?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFsZSUyMGRvY3RvciUyMHBvcnRyYWl0fGVufDB8fDB8fHww',
         availability: ['Tuesday 10:00 AM', 'Thursday 1:00 PM', 'Thursday 3:00 PM', 'Friday 9:00 AM'],

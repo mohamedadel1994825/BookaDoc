@@ -116,8 +116,8 @@ export default function BookingModal({ doctor, onClose }: BookingModalProps) {
             src={doctor.photo}
             alt={doctor.name}
             sx={{
-              width: 60,
-              height: 60,
+              width: { xs: 48, sm: 60 },
+              height: { xs: 48, sm: 60 },
               borderRadius: "50%",
               objectFit: "cover",
               mr: 2,
