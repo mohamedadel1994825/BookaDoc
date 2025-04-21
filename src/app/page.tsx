@@ -115,7 +115,12 @@ export default function HomePage() {
         <Typography variant="h3" component="h1" gutterBottom>
           InVitro Capital Doctors
         </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
+        <Typography
+          variant="subtitle1"
+          color="text.secondary"
+          component="h2" // or h2/h4 depending on your heading structure
+          aria-describedby="find-and-book-appointments-heading"
+        >
           Find and book appointments with top healthcare specialists
         </Typography>
       </Box>

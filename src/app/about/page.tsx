@@ -26,6 +26,7 @@ export default function AboutPage() {
           <Typography
             variant="subtitle1"
             color="text.secondary"
+            component="h2"
             sx={{ maxWidth: 800, mx: "auto" }}
           >
             Connecting patients with the best healthcare professionals through
@@ -37,7 +38,7 @@ export default function AboutPage() {
         <Box sx={{ mb: 6 }}>
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" component="h3" gutterBottom>
                 Our Mission
               </Typography>
               <Typography variant="body1" paragraph>
@@ -72,6 +73,7 @@ export default function AboutPage() {
         <Box sx={{ mb: 6 }}>
           <Typography
             variant="h5"
+            component="h3"
             gutterBottom
             sx={{ textAlign: "center", mb: 4 }}
           >
@@ -109,7 +111,7 @@ export default function AboutPage() {
                   <CardContent>
                     <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                       {feature.icon}
-                      <Typography variant="h6" sx={{ ml: 2 }}>
+                      <Typography variant="h6" component="h4" sx={{ ml: 2 }}>
                         {feature.title}
                       </Typography>
                     </Box>

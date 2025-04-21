@@ -41,7 +41,7 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
         transition: "transform 0.2s",
         "&:hover": { transform: "scale(1.01)" },
         boxShadow: 2,
-        overflow: "hidden", // Ensures no content breaks outside the card
+        overflow: "hidden",
       }}
       aria-label={`Doctor card for ${doctor.name}`}
     >
@@ -51,7 +51,6 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
           flexDirection: { xs: "column", sm: "row" },
         }}
       >
-        {/* Completely redesigned image container for better responsiveness */}
         <Box
           sx={{
             position: "relative",
@@ -61,16 +60,14 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
             height: { xs: 200, sm: "auto" },
             bgcolor: "background.default",
             overflow: "hidden",
-            // Different border radius based on layout
             borderRadius: {
               xs: "4px 4px 0 0",
               sm: "4px 0 0 4px",
             },
-            // This ensures the container maintains aspect ratio on larger screens
             "&::before": {
               content: '""',
               display: { xs: "none", sm: "block" },
-              paddingTop: "100%", // 1:1 Aspect ratio
+              paddingTop: "100%",
             },
           }}
         >
@@ -123,20 +120,37 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                 >
                   {doctor.name}
                 </Typography>
-                <Typography variant="subtitle1" color="primary" gutterBottom>
+
+                <Typography
+                  variant="subtitle1"
+                  component="p"
+                  color="primary"
+                  gutterBottom
+                  aria-label={`Specialty: ${doctor.specialty}`}
+                >
                   {doctor.specialty}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
+
+                <Typography
+                  variant="body2"
+                  component="p"
+                  color="text.secondary"
+                  gutterBottom
+                >
                   {doctor.location}
                 </Typography>
+
                 <Typography
-                  variant="subtitle2"
+                  variant="body2"
+                  component="p"
                   color="primary.dark"
                   sx={{ fontWeight: "bold", mt: 1 }}
+                  aria-label={`Consultation fee: $${doctor.price.toFixed(2)}`}
                 >
                   Consultation Fee: ${doctor.price.toFixed(2)}
                 </Typography>
               </Box>
+
               <Box
                 sx={{
                   display: "flex",
@@ -192,9 +206,11 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                       size="small"
                       variant="outlined"
                       sx={{ borderRadius: 1 }}
+                      aria-label={`Availability: ${slot}`}
                     />
                   ))}
               </Box>
+
               {doctor.availability.length > (isTablet ? 2 : 3) && (
                 <Chip
                   label={`+${
@@ -207,6 +223,7 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                 />
               )}
             </Stack>
+
             <Button
               variant="contained"
               color="primary"

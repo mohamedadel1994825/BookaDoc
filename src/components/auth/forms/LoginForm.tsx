@@ -152,86 +152,90 @@ export default function LoginForm() {
 
   return (
     <Suspense fallback={<CircularProgress />}>
-
-    <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        maxWidth: 400,
-        width: "100%",
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-      }}
-    >
-      <Typography variant="h4" gutterBottom align="center">
-        Login
-      </Typography>
-
-      {showRegistrationSuccess && (
-        <Alert severity="success" sx={{ mb: 2 }}>
-          Registration successful! Please log in.
-        </Alert>
-      )}
-
-      {pendingCartItem && (
-        <Alert severity="info" sx={{ mb: 2 }}>
-          Please log in to add items to your cart.
-        </Alert>
-      )}
-
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {error}
-        </Alert>
-      )}
-
-      <TextField
-        fullWidth
-        label="Email"
-        type="email"
-        {...register("email")}
-        error={!!errors.email}
-        helperText={errors.email?.message}
-        sx={{ mb: 2 }}
-      />
-
-      <TextField
-        fullWidth
-        label="Password"
-        type={showPassword ? "text" : "password"}
-        {...register("password")}
-        error={!!errors.password}
-        helperText={errors.password?.message}
-        sx={{ mb: 2 }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                onClick={() => setShowPassword(!showPassword)}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{
+          maxWidth: 400,
+          width: "100%",
+          p: 3,
+          boxShadow: 3,
+          borderRadius: 2,
         }}
-      />
-
-      <Button
-        type="submit"
-        variant="contained"
-        fullWidth
-        sx={{ mb: 2 }}
-        disabled={isLoading}
       >
-        {isLoading ? <CircularProgress size={24} /> : "Login"}
-      </Button>
+        <Typography variant="h4" component="h2" gutterBottom align="center">
+          Login
+        </Typography>
 
-      <Button variant="text" fullWidth onClick={() => router.push("/register")}>
-        Don&apos;t have an account? Register
-      </Button>
+        {showRegistrationSuccess && (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            Registration successful! Please log in.
+          </Alert>
+        )}
+
+        {pendingCartItem && (
+          <Alert severity="info" sx={{ mb: 2 }}>
+            Please log in to add items to your cart.
+          </Alert>
+        )}
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <TextField
+          fullWidth
+          label="Email"
+          type="email"
+          {...register("email")}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          sx={{ mb: 2 }}
+        />
+
+        <TextField
+          fullWidth
+          label="Password"
+          type={showPassword ? "text" : "password"}
+          {...register("password")}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          sx={{ mb: 2 }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          sx={{ mb: 2 }}
+          disabled={isLoading}
+        >
+          {isLoading ? <CircularProgress size={24} /> : "Login"}
+        </Button>
+
+        <Button
+          variant="text"
+          fullWidth
+          onClick={() => router.push("/register")}
+        >
+          Don&apos;t have an account? Register
+        </Button>
       </Box>
-      </Suspense>
+    </Suspense>
   );
 }

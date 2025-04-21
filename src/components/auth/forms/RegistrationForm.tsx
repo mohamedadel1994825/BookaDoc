@@ -14,7 +14,6 @@ import {
   InputAdornment,
   Snackbar,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -59,8 +58,6 @@ export default function RegistrationForm() {
         borderRadius: 2,
       }}
     >
-
-
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
@@ -108,6 +105,7 @@ export default function RegistrationForm() {
               <IconButton
                 onClick={() => setShowPassword(!showPassword)}
                 edge="end"
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
@@ -130,6 +128,12 @@ export default function RegistrationForm() {
               <IconButton
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 edge="end"
+                aria-label={
+                  showConfirmPassword
+                    ? "Hide confirm password"
+                    : "Show confirm password"
+                }
+                title={showPassword ? "Hide password" : "Show password"}
               >
                 {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>

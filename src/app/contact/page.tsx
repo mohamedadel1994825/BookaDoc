@@ -72,7 +72,7 @@ export default function ContactPage() {
       <Grid container spacing={4}>
         <Grid item xs={12} md={5}>
           <Paper sx={{ p: 4, height: "100%" }}>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" component="h1" gutterBottom>
               Our Information
             </Typography>
             <Typography variant="body2" color="text.secondary" paragraph>
@@ -87,7 +87,7 @@ export default function ContactPage() {
                   sx={{ mr: 2, alignSelf: "flex-start", mt: 0.5 }}
                 />
                 <Box>
-                  <Typography variant="subtitle1" gutterBottom>
+                  <Typography variant="subtitle1" component="h2" gutterBottom>
                     Address
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -104,10 +104,14 @@ export default function ContactPage() {
                   sx={{ mr: 2, alignSelf: "flex-start", mt: 0.5 }}
                 />
                 <Box>
-                  <Typography variant="subtitle1" gutterBottom>
+                  <Typography variant="subtitle1" component="h2" gutterBottom>
                     Phone
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant="body2"
+                    component="h2"
+                    color="text.secondary"
+                  >
                     +1 (555) 123-4567
                   </Typography>
                 </Box>
@@ -119,7 +123,7 @@ export default function ContactPage() {
                   sx={{ mr: 2, alignSelf: "flex-start", mt: 0.5 }}
                 />
                 <Box>
-                  <Typography variant="subtitle1" gutterBottom>
+                  <Typography variant="subtitle1" component="h2" gutterBottom>
                     Email
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -131,7 +135,7 @@ export default function ContactPage() {
 
             <Divider sx={{ my: 3 }} />
 
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" component="h2" gutterBottom>
               Hours of Operation
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -144,7 +148,7 @@ export default function ContactPage() {
 
         <Grid item xs={12} md={7}>
           <Paper sx={{ p: 4 }}>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" component="h2" gutterBottom>
               Send Us a Message
             </Typography>
 

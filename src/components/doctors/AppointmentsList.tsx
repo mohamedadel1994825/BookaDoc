@@ -76,7 +76,7 @@ export default function AppointmentsList({
   }
 
   return (
-    <Stack spacing={2} aria-label="Your appointments">
+    <Stack spacing={2} aria-label="Your appointments" role="list">
       {appointments.map((appointment: Appointment) => (
         <Card
           key={appointment.id}
@@ -87,9 +87,12 @@ export default function AppointmentsList({
             borderRadius: 1,
           }}
           aria-label={`Appointment with ${appointment.doctorName}`}
+          role="listitem"
+          tabIndex={0}
         >
           <CardContent>
             <Grid container spacing={2} alignItems="center">
+              {/* Avatar Grid Item */}
               <Grid item xs={3} sm={1}>
                 <Avatar
                   sx={{
@@ -102,16 +105,21 @@ export default function AppointmentsList({
                   }}
                   alt={appointment.doctorName}
                   src={appointment.doctorPhoto}
+                  aria-hidden="true" // Image is decorative since name is already announced
                 />
               </Grid>
+
+              {/* Doctor Info Grid Item */}
               <Grid item xs={9} sm={5}>
                 <Typography
                   variant="h6"
+                  component="h1" // Using heading for better document structure
                   gutterBottom
                   sx={{
                     fontSize: { xs: "1rem", sm: "1.25rem" },
                     marginBottom: { xs: 0.5, sm: 1 },
                   }}
+                  id={`doctor-name-${appointment.id}`}
                 >
                   {appointment.doctorName}
                 </Typography>
@@ -120,10 +128,13 @@ export default function AppointmentsList({
                   color="primary"
                   gutterBottom
                   sx={{ fontSize: { xs: "0.875rem", sm: "1rem" } }}
+                  aria-describedby={`doctor-name-${appointment.id}`}
                 >
                   {appointment.doctorSpecialty}
                 </Typography>
               </Grid>
+
+              {/* Appointment Details Grid Item */}
               <Grid
                 item
                 xs={12}
@@ -133,10 +144,18 @@ export default function AppointmentsList({
                   mt: { xs: 1, sm: 0 },
                 }}
               >
-                <Typography variant="body1" fontWeight="medium">
+                <Typography
+                  variant="body1"
+                  fontWeight="medium"
+                  aria-label={`Appointment time: ${appointment.dateTime}`}
+                >
                   {appointment.dateTime}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  aria-label={`Location: ${appointment.location}`}
+                >
                   {appointment.location}
                 </Typography>
               </Grid>
@@ -147,6 +166,11 @@ export default function AppointmentsList({
                 color="error"
                 onClick={() => handleCancelAppointment(appointment.id)}
                 aria-label={`Cancel appointment with ${appointment.doctorName}`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    handleCancelAppointment(appointment.id);
+                  }
+                }}
               >
                 Cancel Appointment
               </Button>
