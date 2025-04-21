@@ -176,17 +176,25 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                 display: { xs: "flex", sm: "flex" },
               }}
             >
-              {doctor.availability
-                .slice(0, isTablet ? 2 : 3)
-                .map((slot, index) => (
-                  <Chip
-                    key={index}
-                    label={slot}
-                    size="small"
-                    variant="outlined"
-                    sx={{ borderRadius: 1 }}
-                  />
-                ))}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  gap: 1,
+                }}
+              >
+                {doctor.availability
+                  .slice(0, isTablet ? 2 : 3)
+                  .map((slot, index) => (
+                    <Chip
+                      key={index}
+                      label={slot}
+                      size="small"
+                      variant="outlined"
+                      sx={{ borderRadius: 1 }}
+                    />
+                  ))}
+              </Box>
               {doctor.availability.length > (isTablet ? 2 : 3) && (
                 <Chip
                   label={`+${
