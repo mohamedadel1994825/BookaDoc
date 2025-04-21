@@ -1,5 +1,5 @@
 🔗 Live Demo
-BookaDoc Demo
+BookaDoc 
 A responsive and accessible doctor appointment booking UI module for healthcare platforms.
 ✨ Features
 
@@ -14,7 +14,6 @@ A responsive and accessible doctor appointment booking UI module for healthcare 
 🗄️ State Management: Redux Toolkit
 🎨 Styling: Tailwind CSS
 ♿ Accessibility: ARIA attributes and keyboard navigation
-Data Fetching: React Query
 
 🚀 Setup Instructions
 
