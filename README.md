@@ -13,7 +13,7 @@ A responsive and accessible doctor appointment booking UI module for healthcare 
 
 - ⚛️ **Framework**: Next.js with TypeScript
 - 🗄️ **State Management**: Redux Toolkit
-- 🎨 **Http**: React-Query
+- 📊 **Http**: React-Query
 - 🎨 **Styling**: Tailwind CSS
 - ♿ **Accessibility**: ARIA attributes and keyboard navigation
 
